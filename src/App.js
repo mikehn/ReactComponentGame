@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import './App.css';
+import GameGrid from './components/GameGrid';
+import './style/App.css';
 
 class App extends Component {
   render() {
+    var size = 200;
+    var xBlocks = Math.floor(window.innerWidth/size);
+    var yBlocks =  Math.floor(window.innerHeight/size);
+   
     return (
       <div className="App">
-       <h1>React Component Game</h1>
+       <GameGrid refreshRate={600} size={size} xBlocks={xBlocks} yBlocks={yBlocks} />
+
       </div>
     );
   }
