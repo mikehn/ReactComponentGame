@@ -32,14 +32,21 @@ class GameGrid extends Component {
     render() {
         var width = this.props.xBlocks * this.props.size ;
         var height = this.props.yBlocks * this.props.size;
-
+        //{ width: width, height: height }
 
 
         return (
-            <div className="main-grid" style={{ width: width, height: height }}>
+            <div id="pm-grid" className="main-grid">
                 {this.renderGridBlocks(this.props.size, this.props.xBlocks, this.props.yBlocks)}
             </div>
         );
+    }
+
+    componentDidMount(){
+        
+        var width = this.props.xBlocks * this.props.size ;
+        console.log(width);
+        document.getElementById("pm-grid").style.gridTemplateColumns ="repeat("+this.props.xBlocks+", "+(this.props.size-1)+"px)";
     }
 }
 

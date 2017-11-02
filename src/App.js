@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   render() {
-    var cubeSize = 60;
+    var cubeSize = 48;
     
     var xBlocks = this.getElementsCount(window.innerWidth,cubeSize,0.95); //Math.floor((window.innerWidth*0.95)/size);
     var yBlocks = this.getElementsCount(window.innerHeight,cubeSize,0.86);  //Math.floor((window.innerHeight*0.86)/size);
