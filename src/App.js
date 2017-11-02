@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
 import GameGrid from './components/GameGrid';
+import Banner from './components/Banner';
 import './style/App.css';
 
+
+
+
 class App extends Component {
+
+  getElementsCount(size,factor,shrink){
+    var scaledSize = Math.floor(size*shrink);
+    return (scaledSize-(scaledSize % factor))/factor;
+  }
+
   render() {
-    var size = 200;
-    var xBlocks = Math.floor(window.innerWidth/size);
-    var yBlocks =  Math.floor(window.innerHeight/size);
+    var cubeSize = 60;
+    
+    var xBlocks = this.getElementsCount(window.innerWidth,cubeSize,0.95); //Math.floor((window.innerWidth*0.95)/size);
+    var yBlocks = this.getElementsCount(window.innerHeight,cubeSize,0.86);  //Math.floor((window.innerHeight*0.86)/size);
    
     return (
       <div className="App">
-       <GameGrid refreshRate={600} size={size} xBlocks={xBlocks} yBlocks={yBlocks} />
+        
+       <Banner/>
+       <GameGrid refreshRate={480} size={cubeSize} xBlocks={xBlocks} yBlocks={yBlocks} />
 
       </div>
     );

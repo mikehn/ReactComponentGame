@@ -1,6 +1,25 @@
+
+
+body{
+  background: rgb(26, 22, 44);
+}
+
+body
+{
+  background:
+  linear-gradient(45deg, #12064a 45px, transparent 45px)64px 64px,
+  linear-gradient(45deg, #12064a 45px, transparent 45px,transparent 91px, #0d0d7b 91px, #1717a2  135px, transparent 135px),
+  linear-gradient(-45deg, #12064a 23px, transparent 23px, transparent 68px,#12064a 68px,#12064a 113px,transparent 113px,transparent 158px,#12064a 158px);
+background-color:#0d0d7b;
+background-size: 128px 128px;
+}
+
 .App {
   text-align: center;
-  padding: 1.4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center; 
 }
 
 .App-logo {

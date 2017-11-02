@@ -1,58 +1,43 @@
 import React, { Component } from 'react';
+import GameLogic from './GameLogic';
 import GridBlock from './GridBlock';
-import {PacMan,PacManLogic} from './PacMan';
+import PacMan from './PacMan';
+import Wall from './Wall';
 import "../style/grid.css";
 
 class GameGrid extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {clock:1};
-        this.pm =  new PacManLogic(0,0);
+        this.state = { clock: 1 };
+       
+        this.gameLogic = new GameLogic(this.props.xBlocks,this.props.yBlocks,0.1,this.props.size);
     }
-    
-    
 
-    componentWillMount(){
-        
+    componentWillMount() {
+
         window.setInterval(
-            ()=> {this.setState((prevState, props) => ({clock: prevState.clock*-1}));}
-            ,this.props.refreshRate
+            () => { this.setState((prevState, props) => ({ clock: prevState.clock * -1 })); }
+            , this.props.refreshRate
         );
     }
 
     renderGridBlocks(size, xBlocks, yBlocks) {
-
-        var gridArray = [];
-        for (var y = 0; y < yBlocks; ++y)
-            for (var x = 0; x < xBlocks; ++x) {
-                gridArray.push(
-                    <GridBlock key={x + "," + y} xPos={x} yPos={y} size={size - 1}>
-                       {this.drawPacMan(x,y)}
-                    </GridBlock>
-                );
-            }
-        this.pm.updateLocation();
+        var gridArray = [],key;
+        this.gameLogic.matrixOp(this.gameLogic.grid,(x,y,matrix)=> {gridArray.push(this.gameLogic.getGridBlock(x,y,size));});
+        this.gameLogic.update();
         return gridArray;
     }
-
-    drawPacMan = (x,y) => {
-        
-        if( this.pm.checkLocation(x,y))
-            return  <div className="pm-center"><PacMan size={this.props.size/2}/></div>
-        return "";
-    }
-
+   
     render() {
-        console.log(this.props.xBlocks);
-        var width =  this.props.xBlocks * this.props.size;
+        var width = this.props.xBlocks * this.props.size ;
         var height = this.props.yBlocks * this.props.size;
-        
+
 
 
         return (
-            <div className="main-grid" style={{ width:  width, height:height }}>
-                {this.renderGridBlocks(this.props.size, this.props.xBlocks , this.props.yBlocks)}
+            <div className="main-grid" style={{ width: width, height: height }}>
+                {this.renderGridBlocks(this.props.size, this.props.xBlocks, this.props.yBlocks)}
             </div>
         );
     }

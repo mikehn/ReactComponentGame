@@ -1,0 +1,45 @@
+@font-face {
+    font-family: aladin;
+    src: url('./Aladin.ttf');
+  }
+
+  @font-face {
+    font-family: pac-man;
+    src: url('./pac-font.ttf');
+  }
+  
+  #pc-logo{
+    font-family: pac-man;
+    color:#f6ea22;
+    margin: 12px;
+  }
+
+  h1{
+    font-family: aladin;
+    color:#f6ea22;
+    text-shadow: 3px 0 #000000,0 3px #000000,1px 0 #000000,0 -1px #000000;
+  }
+
+  .banner{
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 54%;
+      margin-top: 10px;
+  }
+  .borderBanner{
+    background: rgb(236, 28, 50);
+    width:40%;
+    display: flex;
+    justify-content: center;
+    border-radius:22px;
+
+  }
+  .innerBanner{
+    flex-grow:1;
+    background: rgb(244, 120, 34);
+    margin: 6px;
+    border-radius:22px;
+    border-style: solid;
+    border-color: #3e260c;
+  }
