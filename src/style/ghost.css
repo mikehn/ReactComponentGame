@@ -1,0 +1,21 @@
+.ghost{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height:100%;
+    border: solid 3.5px purple;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    box-sizing: border-box;
+}
+
+.eye {
+    background: black;
+    width: 12%;
+    height: 12%;
+    border: solid 1px black;
+    border-radius: 100%;
+}

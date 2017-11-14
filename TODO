@@ -1,0 +1,6 @@
+Ghost - props:
+	8 squares around them
+	callback that get a function -> return object(x,y)
+	state according to what they are close to (...)
+	wasLastMoveSuccessful
+	winnerMessage Callback

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../style/Banner.css';
 
-class Banner extends Component {
+export default class Banner extends Component {
     render() {
         var size = 60;
         var xBlocks = Math.floor((window.innerWidth * 0.98) / size);
@@ -18,5 +18,3 @@ class Banner extends Component {
         );
     }
 }
-
-export default Banner;

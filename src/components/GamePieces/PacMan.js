@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import "../style/pacman.css";
+import "../../style/pacman.css";
 
-class PacMan extends Component {
+export default class PacMan extends Component {
 
     render() {
         return (
@@ -9,13 +9,9 @@ class PacMan extends Component {
                 <div className="pacman">
                     <div className="pacman-top" style={{ width: this.props.size, height: this.props.size / 2 }}></div>
                     <div className="pacman-bottom" style={{ width: this.props.size, height: this.props.size / 2 }}></div>
-
                 </div>
             </div>
         );
     }
 
-
 }
-
-export default PacMan;
