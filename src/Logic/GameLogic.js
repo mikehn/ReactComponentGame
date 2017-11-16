@@ -39,30 +39,28 @@ export default class GameLogic {
 
     initializeGameGrid(wallPercent, xBlocks, yBlocks) {
         this.grid = Array(yBlocks).fill().map(() => Array(xBlocks).fill(PIECES_TYPES.UNDEF));
-        matrixOp(this.grid, (x, y, matrix) => { matrix[y][x] = Sqr(PIECES_TYPES.EMPTY, ""); }); //why do we need the previous line?
+        matrixOp(this.grid, (x, y, matrix) => { matrix[y][x] = Sqr(PIECES_TYPES.EMPTY, ""); }); 
         this.fillWalls(this.grid, 1 - wallPercent);
     }
 
-    fillWalls(fillChance) {
-        var up = (x, y) => this.getPieceType(x, y - 1) === PIECES_TYPES.WALL;
-        var left = (x, y) => this.getPieceType(x - 1, y) === PIECES_TYPES.WALL;
-        var right = (x, y) => this.getPieceType(x + 1, y) === PIECES_TYPES.WALL;
-        var down = (x, y) => this.getPieceType(x, y + 1) === PIECES_TYPES.WALL;
-        var sides = (x, y) => { return { up: up(x, y), down: down(x, y), left: left(x, y), right: right(x, y) }; };
+    fillWalls(grid,fillChance) {
+        let up = (x, y) => this.getPieceType(x, y - 1) === PIECES_TYPES.WALL;
+        let left = (x, y) => this.getPieceType(x - 1, y) === PIECES_TYPES.WALL;
+        let right = (x, y) => this.getPieceType(x + 1, y) === PIECES_TYPES.WALL;
+        let down = (x, y) => this.getPieceType(x, y + 1) === PIECES_TYPES.WALL;
+        let sides = (x, y) => { return { up: up(x, y), down: down(x, y), left: left(x, y), right: right(x, y) }; };
 
         var wallList = [];
-        matrixOp(this.grid, (x, y, matrix) => {
+        matrixOp(grid, (x, y, matrix) => {
             if (Math.random() > fillChance) {
                 matrix[y][x].type = PIECES_TYPES.WALL;
-                wallList.push({ x: x, y: y });
             }
         });
 
         if (FILL_SIDES_WALL) {
-            matrixOp(this.grid, (x, y, matrix) => {
+            matrixOp(grid, (x, y, matrix) => {
                 if (x == this.xBlocks - 1 || y == this.yBlocks - 1 || x == 0 || y == 0) {
                     this.grid[y][x].type = PIECES_TYPES.WALL;
-                    wallList.push({ x: x, y: y });
                 }
             });
         }
@@ -72,14 +70,17 @@ export default class GameLogic {
 
     initializeGameComponents() {
         this.pacman = new PacmanLogic(...this.getRandomEmptyLocation());
+        //TODO: set game components on grid.
+        this.grid[1][1].type = PIECES_TYPES.PACKMAN;
         this.enemies = [new GhostLogic(...this.getRandomEmptyLocation())];
     }
 
     startGame() {
         this.gameStepInterval = setInterval(
             () => {
-                // go over pieces -> update their locations
+                //TODO: go over pieces -> update their locations
                 // send data to renderer (setState via callback)
+               //this.updatePiece(this.pacman);
                 this.onGameStepCallback(this.grid); //TODO: clone or use an immutable object
             },
             this.refreshRate);
@@ -91,7 +92,7 @@ export default class GameLogic {
         //TODO: clean state
     }
 
-    getRandomEmptyLocation() {
+    getRandomEmptyLocation() {//TODO: Fix logic - this is not garantied to be empty.
         let randomXLocation = randomIntFromInterval(this.xBlocks);
         let randomYLocation = randomIntFromInterval(this.yBlocks);
 
@@ -133,7 +134,7 @@ export default class GameLogic {
     }
 
     swapPiecesLocation(locA, locB) {
-        [this.grid[locA.y][locA.x], this.grid[locB.y][locB.x]] = [this.grid[locB.y][locB.x], this.grid[locA.y][locA.x]]
+        [this.grid[locA.y][locA.x], this.grid[locB.y][locB.x]] = [this.grid[locB.y][locB.x], this.grid[locA.y][locA.x]];
     }
 
 }

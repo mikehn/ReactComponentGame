@@ -11,26 +11,34 @@ export default class App extends Component {
         super(props);
 
         this.state = {
-            data: []
+            data: [],
         };
 
         this.gameLogic = new GameLogic(this.onGameStep,GameSettings);
+        
+    }
+
+    componentDidMount() {
+        this.gameLogic.startGame();
     }
 
     onGameStep =(gridData)=>{
-        this.setState(() => {
-            data: gridData
-        })
+       
+        this.setState((prev,props) => ({
+                data: gridData,
+        }))
     };
 
     render() {
         return (
             <div className="App">
                <Banner/>
+               
                <GameGrid data={this.state.data} 
                          size={GameSettings.cubeSize}
                          xBlocks={GameSettings.xBlocks} 
                          yBlocks={GameSettings.yBlocks} 
+                         logic= {this.gameLogic}
                 />
             </div>
         );
