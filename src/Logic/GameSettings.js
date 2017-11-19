@@ -3,7 +3,6 @@
 function getElementsCount(size, factor, shrink){
     
     let scaledSize = Math.floor(size * shrink);
-    console.log("game Size: "+factor);
     return (scaledSize - (scaledSize % factor)) / factor;
 }
 

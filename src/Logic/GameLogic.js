@@ -14,8 +14,6 @@ export default class GameLogic {
             this.init(settings);
     }
 
-
-
     init(settings) {
         let {xBlocks,yBlocks,wallPercent,refreshDelay} = settings;
         this.xBlocks = xBlocks;
@@ -39,8 +37,12 @@ export default class GameLogic {
 
     initializeGameGrid(wallPercent, xBlocks, yBlocks) {
         this.grid = Array(yBlocks).fill().map(() => Array(xBlocks).fill(PIECES_TYPES.UNDEF));
-        matrixOp(this.grid, (x, y, matrix) => { matrix[y][x] = Sqr(PIECES_TYPES.EMPTY, ""); }); 
+        this.emptyCells = new Set();
+        matrixOp(this.grid, (x, y, matrix) => {
+            matrix[y][x] = Sqr(PIECES_TYPES.EMPTY, "");
+        });
         this.fillWalls(this.grid, 1 - wallPercent);
+
     }
 
     fillWalls(grid,fillChance) {
@@ -55,12 +57,16 @@ export default class GameLogic {
             if (Math.random() > fillChance) {
                 matrix[y][x].type = PIECES_TYPES.WALL;
             }
+            else{
+                this.emptyCells.add(`${x},${y}`);
+            }
         });
 
         if (FILL_SIDES_WALL) {
             matrixOp(grid, (x, y, matrix) => {
                 if (x == this.xBlocks - 1 || y == this.yBlocks - 1 || x == 0 || y == 0) {
-                    this.grid[y][x].type = PIECES_TYPES.WALL;
+                    matrix[y][x].type = PIECES_TYPES.WALL;
+                    this.emptyCells.delete(`${x},${y}`);
                 }
             });
         }
@@ -69,22 +75,21 @@ export default class GameLogic {
     }
 
     initializeGameComponents() {
-        this.pacman = new PacmanLogic(...this.getRandomEmptyLocation());
+        this.pacman = new PacmanLogic(this.getRandomEmptyLocation());
         //TODO: set game components on grid.
-        this.grid[1][1].type = PIECES_TYPES.PACKMAN;
-        this.enemies = [new GhostLogic(...this.getRandomEmptyLocation())];
+        let pacmanLocation = this.pacman.getLocation();
+        this.grid[pacmanLocation.y][pacmanLocation.x].type = PIECES_TYPES.PACKMAN;
+        //this.enemies = [new GhostLogic(this.getRandomEmptyLocation())];
     }
 
     startGame() {
         this.gameStepInterval = setInterval(
             () => {
-                //TODO: go over pieces -> update their locations
-                // send data to renderer (setState via callback)
-               //this.updatePiece(this.pacman);
+               this.updatePiece(this.pacman);
+                //TODO: go over enemies pieces -> update their locations
                 this.onGameStepCallback(this.grid); //TODO: clone or use an immutable object
             },
             this.refreshRate);
-
     }
 
     endGame() {
@@ -92,27 +97,32 @@ export default class GameLogic {
         //TODO: clean state
     }
 
-    getRandomEmptyLocation() {//TODO: Fix logic - this is not garantied to be empty.
-        let randomXLocation = randomIntFromInterval(this.xBlocks);
-        let randomYLocation = randomIntFromInterval(this.yBlocks);
+    getRandomEmptyLocation() {//TODO: Fix logic - this is not guaranteed to be empty.
+        let randomEmptyCell = [...this.emptyCells][randomIntFromInterval(this.emptyCells.size)];
+        this.emptyCells.delete(randomEmptyCell);
+        randomEmptyCell = randomEmptyCell.split(',').map((val) => {
+            return parseInt(val)
+        });
 
-        return {
-            x: randomXLocation,
-            y: randomYLocation
-        }
+        let randomEmptyLocation =  {
+            x: randomEmptyCell[0],
+            y: randomEmptyCell[1]
+        };
+
+        return randomEmptyLocation;
     }
 
-    getTypeSurround(x, y, radius) {
+    getTypeSurround(location, radius) {
+        let {x,y} = location;
+        let size = radius * 2 + 1;
+        let sourroundingTypes = Array(size);
 
-        var size = radius * 2 + 1;
-        var sourroundingTypes = Array(size);
+        let inY = 0;
 
-        var inY = 0;
-
-        for (var i = y - radius; i <= (y + radius); ++i) {
-            var inX = 0;
+        for (let i = y - radius; i <= (y + radius); ++i) {
+            let inX = 0;
             sourroundingTypes[inY] = Array(size);
-            for (var j = x - radius; j <= (x + radius); ++j) {
+            for (let j = x - radius; j <= (x + radius); ++j) {
                 sourroundingTypes[inY][inX] = this.getPieceType(j, i);
                 inX++;
             }
@@ -130,11 +140,13 @@ export default class GameLogic {
     }
 
     updatePiece(piece) {
-        this.swapPiecesLocation({ x: piece.x, y: piece.y }, piece.updateLocation(this.getTypeSurround(piece.x, piece.y, 1)));
+        let pieceLocation = piece.getLocation();
+        this.swapPiecesLocation(pieceLocation, piece.updateLocation(this.getTypeSurround(pieceLocation, 1)));
     }
 
     swapPiecesLocation(locA, locB) {
         [this.grid[locA.y][locA.x], this.grid[locB.y][locB.x]] = [this.grid[locB.y][locB.x], this.grid[locA.y][locA.x]];
+
     }
 
 }

@@ -1,6 +1,6 @@
-export function randomIntFromInterval(min, max)
+export function randomIntFromInterval(intervalMaxBound)
 {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    return Math.floor(Math.random() * (intervalMaxBound - 0 + 1) + 0);
 }
 
 export function Sqr(type, value) {

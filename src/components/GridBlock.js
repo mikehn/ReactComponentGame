@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import PacMan from './GamePieces/PacMan';
+import Pacman from './GamePieces/PacMan';
 import Wall from './GamePieces/Wall';
 import { PIECES_TYPES } from '../components/GamePieces/PiecesTypes';
 
 class GridBlock extends Component {
-
-
-
 
   renderBlockType(type) {
     let up = this.props.surround[0][1] == PIECES_TYPES.WALL;
@@ -18,7 +15,7 @@ class GridBlock extends Component {
       case (PIECES_TYPES.WALL):
         return <Wall sides={{ up, down, left, right }} />
       case (PIECES_TYPES.PACKMAN):  
-        return <PacMan size={this.props.size/2}/>
+        return <Pacman size={this.props.size/2}/>
       default:
         return <div></div>
     }

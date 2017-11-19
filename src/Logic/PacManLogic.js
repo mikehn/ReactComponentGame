@@ -2,9 +2,9 @@ import {PIECES_TYPES} from '../components/GamePieces/PiecesTypes';
 
 class PacManLogic {
 
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(location) {
+        this.x = location.x;
+        this.y = location.y;
     }
 
     updateLocation(sides) {
@@ -19,13 +19,25 @@ class PacManLogic {
             if(sides[y][x] === PIECES_TYPES.EMPTY){
                 this.x+=(x-1);
                 this.y+=(y-1);
-                return {x:this.x,y:this.y} ;
+                return this.getLocation();
             }
         }
-        return {x:this.x,y:this.y} ;
-        
     }
 
+    getX(){
+        return this.x;
+    }
+
+    getY(){
+        return this.y;
+    }
+
+    getLocation(){
+        return {
+            x:this.x,
+            y:this.y
+        }
+    }
 }
 
 export default PacManLogic;

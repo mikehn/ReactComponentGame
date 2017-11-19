@@ -9,7 +9,6 @@ class GameGrid extends Component {
 
     constructor(props) {
         super(props);
-        console.log(`GameGrid props: ${JSON.stringify(props)}`)
     }
 
     render() {
@@ -29,7 +28,7 @@ class GameGrid extends Component {
         matrixOp(grid,(x,y,mat) => {components.push(<GridBlock key={`${x},${y}`} 
                                                                type={mat[y][x].type} 
                                                                size={this.props.size} 
-                                                               surround={this.props.logic.getTypeSurround(x,y,1)} />
+                                                               surround={this.props.logic.getTypeSurround({x,y},1)} />
                                                             )});
         return components;
     }
