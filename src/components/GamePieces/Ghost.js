@@ -10,6 +10,12 @@ export default class Ghost extends Component {
         }
     }
 
+    getLocationFunction = (surround) => {
+        return ()=>{
+            return {x:1,y:1};
+        }
+    };
+
     render() {
         return (
             <div className="ghost" style={{backgroundColor: this.state.backgroundColor, width: this.props.size, height: this.props.size }}>

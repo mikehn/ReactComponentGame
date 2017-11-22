@@ -22,6 +22,7 @@ class GhostLogic {
                     return this.getLocation();
                 }
         }
+        return this.getLocation();
     }
 
     getType(){

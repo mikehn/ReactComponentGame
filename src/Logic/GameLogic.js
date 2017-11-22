@@ -77,6 +77,7 @@ export default class GameLogic {
         this.pacman = new PacmanLogic(this.getRandomEmptyLocation());
         this.ghost = new GhostLogic(this.getRandomEmptyLocation());
         this.ghost2 = new GhostLogic(this.getRandomEmptyLocation());
+        //var g1 = <Ghost location="{}" />
 
         this.gameComponents.add(this.pacman);
         this.gameComponents.add(this.ghost);
@@ -85,6 +86,7 @@ export default class GameLogic {
         this.gameComponents.forEach((comp)=>{
             let loc = comp.getLocation();
             this.grid[loc.y][loc.x].type = comp.getType();
+
         });
 
 

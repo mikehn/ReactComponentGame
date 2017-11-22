@@ -17,10 +17,8 @@ class GridBlock extends Component {
         return <Wall sides={{ up, down, left, right }} />;
       case (PIECES_TYPES.PACKMAN):  
         return <Pacman size={this.props.size/2}/>;
-    case (PIECES_TYPES.GHOST):
-        return <Ghost size={this.props.size/2}/>;
       default:
-        return <div></div>
+        return "";
     }
 
   }
@@ -31,6 +29,7 @@ class GridBlock extends Component {
 
       <div className="grid-block" style={{ width: this.props.size, height: this.props.size, zIndex: 2 }}>
         {this.renderBlockType(this.props.type)}
+        {this.props.children}
       </div>
     );
   }

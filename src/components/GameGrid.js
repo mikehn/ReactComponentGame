@@ -4,6 +4,7 @@ import PacMan from './GamePieces/PacMan';
 import Wall from './GamePieces/Wall';
 import { matrixOp } from '../Logic/Utils';
 import "../style/grid.css";
+import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
 
 class GameGrid extends Component {
 
@@ -25,11 +26,13 @@ class GameGrid extends Component {
     renderGrid(grid){
         let components  = [];
         
-        matrixOp(grid,(x,y,mat) => {components.push(<GridBlock key={`${x},${y}`} 
-                                                               type={mat[y][x].type} 
-                                                               size={this.props.size} 
-                                                               surround={this.props.logic.getTypeSurround({x,y},1)} />
-                                                            )});
+        matrixOp(grid,(x,y,mat) => {
+            components.push(<GridBlock key={`${x},${y}`}
+                                       type={mat[y][x].type}
+                                       size={this.props.size}
+                                       surround={this.props.logic.getTypeSurround({x,y},1)} >
+                {(mat[y][x].type == PIECES_TYPES.GHOST)?mat[y][x].value:""}
+                </GridBlock>)});
         return components;
     }
 
