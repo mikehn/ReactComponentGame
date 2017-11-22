@@ -12,7 +12,7 @@ export default class Ghost extends Component {
 
     render() {
         return (
-            <div className="ghost" style={{backgroundColor: this.state.backgroundColor}}>
+            <div className="ghost" style={{backgroundColor: this.state.backgroundColor, width: this.props.size, height: this.props.size }}>
                 <div className="eye" id="leftEye"></div>
                 <div className="eye" id="rightEye"></div>
             </div>
@@ -21,4 +21,3 @@ export default class Ghost extends Component {
 
 }
 
-export default Ghost;

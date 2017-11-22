@@ -14,6 +14,10 @@ export default class GameLogic {
             this.init(settings);
     }
 
+    setGridType = (location, value) => {
+        this.grid[location.x][location.y].type = value;
+    };
+
     init(settings) {
         let {xBlocks,yBlocks,wallPercent,refreshDelay} = settings;
         this.xBlocks = xBlocks;
@@ -46,13 +50,7 @@ export default class GameLogic {
     }
 
     fillWalls(grid,fillChance) {
-        let up = (x, y) => this.getPieceType(x, y - 1) === PIECES_TYPES.WALL;
-        let left = (x, y) => this.getPieceType(x - 1, y) === PIECES_TYPES.WALL;
-        let right = (x, y) => this.getPieceType(x + 1, y) === PIECES_TYPES.WALL;
-        let down = (x, y) => this.getPieceType(x, y + 1) === PIECES_TYPES.WALL;
-        let sides = (x, y) => { return { up: up(x, y), down: down(x, y), left: left(x, y), right: right(x, y) }; };
 
-        var wallList = [];
         matrixOp(grid, (x, y, matrix) => {
             if (Math.random() > fillChance) {
                 matrix[y][x].type = PIECES_TYPES.WALL;
@@ -75,17 +73,30 @@ export default class GameLogic {
     }
 
     initializeGameComponents() {
+        this.gameComponents = new Set();
         this.pacman = new PacmanLogic(this.getRandomEmptyLocation());
-        //TODO: set game components on grid.
-        let pacmanLocation = this.pacman.getLocation();
-        this.grid[pacmanLocation.y][pacmanLocation.x].type = PIECES_TYPES.PACKMAN;
+        this.ghost = new GhostLogic(this.getRandomEmptyLocation());
+        this.ghost2 = new GhostLogic(this.getRandomEmptyLocation());
+
+        this.gameComponents.add(this.pacman);
+        this.gameComponents.add(this.ghost);
+        this.gameComponents.add(this.ghost2);
+
+        this.gameComponents.forEach((comp)=>{
+            let loc = comp.getLocation();
+            this.grid[loc.y][loc.x].type = comp.getType();
+        });
+
+
         //this.enemies = [new GhostLogic(this.getRandomEmptyLocation())];
     }
 
     startGame() {
         this.gameStepInterval = setInterval(
             () => {
-               this.updatePiece(this.pacman);
+                this.gameComponents.forEach((comp)=>{
+                    this.updatePiece(comp);
+                });
                 //TODO: go over enemies pieces -> update their locations
                 this.onGameStepCallback(this.grid); //TODO: clone or use an immutable object
             },

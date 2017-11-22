@@ -24,12 +24,8 @@ class PacManLogic {
         }
     }
 
-    getX(){
-        return this.x;
-    }
-
-    getY(){
-        return this.y;
+    getType(){
+        return PIECES_TYPES.PACKMAN;
     }
 
     getLocation(){

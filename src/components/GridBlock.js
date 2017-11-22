@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Pacman from './GamePieces/PacMan';
+import Ghost from './GamePieces/Ghost';
 import Wall from './GamePieces/Wall';
 import { PIECES_TYPES } from '../components/GamePieces/PiecesTypes';
 
@@ -13,9 +14,11 @@ class GridBlock extends Component {
     // console.log(up);
     switch (type) {
       case (PIECES_TYPES.WALL):
-        return <Wall sides={{ up, down, left, right }} />
+        return <Wall sides={{ up, down, left, right }} />;
       case (PIECES_TYPES.PACKMAN):  
-        return <Pacman size={this.props.size/2}/>
+        return <Pacman size={this.props.size/2}/>;
+    case (PIECES_TYPES.GHOST):
+        return <Ghost size={this.props.size/2}/>;
       default:
         return <div></div>
     }
