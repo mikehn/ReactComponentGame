@@ -31,7 +31,7 @@ class GameGrid extends Component {
                                        type={mat[y][x].type}
                                        size={this.props.size}
                                        surround={this.props.logic.getTypeSurround({x,y},1)} >
-                {(mat[y][x].type == PIECES_TYPES.GHOST)?mat[y][x].value:""}
+                {(mat[y][x].type == PIECES_TYPES.GHOST)?mat[y][x].value.getComponent():""}
                 </GridBlock>)});
         return components;
     }

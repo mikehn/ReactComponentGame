@@ -2,15 +2,18 @@ import PacmanLogic from './PacManLogic';
 import GhostLogic from './GhostLogic';
 import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
 import { randomIntFromInterval, Sqr, matrixOp } from './Utils';
+import React, { Component}  from 'react';
+import Ghost from "../components/GamePieces/Ghost";
 
+//TODO: move to settings
 const FILL_SIDES_WALL = true;
 
 
 export default class GameLogic {
-    constructor(onGameStep,settings) {
+    constructor(onGameStep, settings) {
         this.onGameStepCallback = onGameStep;
         this.gameStepInterval = null;
-        if(settings)
+        if (settings)
             this.init(settings);
     }
 
@@ -19,7 +22,7 @@ export default class GameLogic {
     };
 
     init(settings) {
-        let {xBlocks,yBlocks,wallPercent,refreshDelay} = settings;
+        let { xBlocks, yBlocks, wallPercent, refreshDelay } = settings;
         this.xBlocks = xBlocks;
         this.yBlocks = yBlocks;
         this.refreshRate = refreshDelay;
@@ -49,13 +52,13 @@ export default class GameLogic {
 
     }
 
-    fillWalls(grid,fillChance) {
+    fillWalls(grid, fillChance) {
 
         matrixOp(grid, (x, y, matrix) => {
             if (Math.random() > fillChance) {
                 matrix[y][x].type = PIECES_TYPES.WALL;
             }
-            else{
+            else {
                 this.emptyCells.add(`${x},${y}`);
             }
         });
@@ -72,32 +75,49 @@ export default class GameLogic {
         //wallList.forEach((val) => {grid[val.y][val.x].value = <Wall sides={sides(val.x, val.y)} /> });
     }
 
+
+    setNextMove(direction){
+
+    }
+
+    // TODO: remove to external file.
+    getGhosComponentSet = () => {
+        let gSet = new Set()
+        gSet.add(<Ghost size={40} />);
+        return gSet;
+    }
+
+    addPeiceToGrid(piece){
+        let loc = piece.getLocation();
+        this.grid[loc.y][loc.x].type = piece.getType();
+        this.grid[loc.y][loc.x].value = piece;
+        return piece;
+    }
+
+    initGhosts(){
+        let gcSet = this.getGhosComponentSet();
+        this.ghosts = new Set();
+        gcSet.forEach(ghost => {
+            let newG = this.addPeiceToGrid(new GhostLogic(ghost,this.getRandomEmptyLocation()));
+            this.ghosts.add(newG);
+        });
+        
+    }
+
     initializeGameComponents() {
         this.gameComponents = new Set();
         this.pacman = new PacmanLogic(this.getRandomEmptyLocation());
-        this.ghost = new GhostLogic(this.getRandomEmptyLocation());
-        this.ghost2 = new GhostLogic(this.getRandomEmptyLocation());
-        //var g1 = <Ghost location="{}" />
-
-        this.gameComponents.add(this.pacman);
-        this.gameComponents.add(this.ghost);
-        this.gameComponents.add(this.ghost2);
-
-        this.gameComponents.forEach((comp)=>{
-            let loc = comp.getLocation();
-            this.grid[loc.y][loc.x].type = comp.getType();
-
-        });
-
-
-        //this.enemies = [new GhostLogic(this.getRandomEmptyLocation())];
+        this.addPeiceToGrid(this.pacman);
+        this.initGhosts();
     }
 
     startGame() {
         this.gameStepInterval = setInterval(
+           
             () => {
-                this.gameComponents.forEach((comp)=>{
-                    this.updatePiece(comp);
+                this.updatePiece( this.pacman);
+                this.ghosts.forEach(ghost => {
+                    this.updatePiece(ghost);
                 });
                 //TODO: go over enemies pieces -> update their locations
                 this.onGameStepCallback(this.grid); //TODO: clone or use an immutable object
@@ -110,14 +130,14 @@ export default class GameLogic {
         //TODO: clean state
     }
 
-    getRandomEmptyLocation() {//TODO: Fix logic - this is not guaranteed to be empty.
+    getRandomEmptyLocation() {
         let randomEmptyCell = [...this.emptyCells][randomIntFromInterval(this.emptyCells.size)];
         this.emptyCells.delete(randomEmptyCell);
         randomEmptyCell = randomEmptyCell.split(',').map((val) => {
             return parseInt(val)
         });
 
-        let randomEmptyLocation =  {
+        let randomEmptyLocation = {
             x: randomEmptyCell[0],
             y: randomEmptyCell[1]
         };
@@ -126,7 +146,7 @@ export default class GameLogic {
     }
 
     getTypeSurround(location, radius) {
-        let {x,y} = location;
+        let { x, y } = location;
         let size = radius * 2 + 1;
         let sourroundingTypes = Array(size);
 
