@@ -8,20 +8,34 @@ function Loc(x, y) {
 
 class GhostLogic {
 
-    constructor(value, location) {
+    constructor(value, location, sides) {
+        this.sides = sides;
         this.x = location.x;
         this.y = location.y;
         this.nextLoc = GAME_CONSTS.CENTER;
         this.value = React.cloneElement(
             value,
-            { setNextMove: (loc) => { this.nextLoc = loc; } }
+            {
+                setNextMove: (loc) => { this.nextLoc = loc; },
+            }
         )
 
     }
 
 
-
+/**
+ * updates peice location and validates move to be legal.
+ * @param {*} sides surround matrix
+ */
     updateLocation(sides) {
+        console.log("update loc");
+        this.value = React.cloneElement(
+             this.value ,
+            {
+                sides: sides,
+            }
+        );
+        this.sides = sides; // not sure if needed
         let cordMap = {};
         let selfX = 1;
         let selfY = 1;
@@ -49,6 +63,7 @@ class GhostLogic {
             // ILLEGAL MOVE
 
         }
+
         return this.getLocation();
     }
 

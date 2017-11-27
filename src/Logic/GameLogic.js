@@ -84,6 +84,7 @@ export default class GameLogic {
     getGhosComponentSet = () => {
         let gSet = new Set()
         gSet.add(<Ghost size={40} />);
+       
         return gSet;
     }
 
@@ -97,15 +98,17 @@ export default class GameLogic {
     initGhosts(){
         let gcSet = this.getGhosComponentSet();
         this.ghosts = new Set();
+        
         gcSet.forEach(ghost => {
-            let newG = this.addPeiceToGrid(new GhostLogic(ghost,this.getRandomEmptyLocation()));
+            let randomLoc = this.getRandomEmptyLocation();
+            let newG = this.addPeiceToGrid(new GhostLogic(ghost,randomLoc,this.getTypeSurround(randomLoc,1)));
             this.ghosts.add(newG);
         });
         
     }
 
     initializeGameComponents() {
-        this.gameComponents = new Set();
+        this.gameComponents = new Set(); // TODO: REMOVE
         this.pacman = new PacmanLogic(this.getRandomEmptyLocation());
         this.addPeiceToGrid(this.pacman);
         this.initGhosts();
