@@ -181,7 +181,14 @@ export default class GameLogic {
     }
 
     swapPiecesLocation(locA, locB) {
-        [this.grid[locA.y][locA.x], this.grid[locB.y][locB.x]] = [this.grid[locB.y][locB.x], this.grid[locA.y][locA.x]];
+        let blockId = (x, y) => `m${x}_${y}`;
+        if(document.getElementById(blockId(locA.x,locA.y)) !=null)
+        if( document.getElementById(blockId(locB.x,locB.y)) != null){
+        document.getElementById(blockId(locA.x,locA.y)).style.gridArea = blockId(locB.x,locB.y);
+        document.getElementById(blockId(locB.x,locB.y)).style.gridArea = blockId(locA.x,locA.y);
+        }
+        // document.getElementById("m_0_0").style.gridTemplateColumns = `repeat(${this.props.xBlocks},${(this.props.size-1)}px)`;
+        //[this.grid[locA.y][locA.x], this.grid[locB.y][locB.x]] = [this.grid[locB.y][locB.x], this.grid[locA.y][locA.x]];
 
     }
 

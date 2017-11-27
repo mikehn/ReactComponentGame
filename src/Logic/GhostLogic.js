@@ -28,7 +28,7 @@ class GhostLogic {
  * @param {*} sides surround matrix
  */
     updateLocation(sides) {
-        console.log("update loc");
+       
         this.value = React.cloneElement(
              this.value ,
             {

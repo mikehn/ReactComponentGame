@@ -27,12 +27,15 @@ class GridBlock extends Component {
   render() {
     return (
 
-      <div className="grid-block" style={{ width: this.props.size, height: this.props.size, zIndex: 2 }}>
+      <div className="grid-block" id={this.props.blocId} style={{ width: this.props.size, height: this.props.size, zIndex: 2 }}>
         {this.renderBlockType(this.props.type)}
         {this.props.children}
       </div>
     );
   }
+
+  
+
 }
 
 export default GridBlock;

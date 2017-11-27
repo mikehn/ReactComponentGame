@@ -13,18 +13,18 @@ export default class Ghost extends Component {
         
         //this.props.setNextMoveLogic(()=>GAME_CONSTS.RIGHT);
        
-        console.log("ctor");
+        //console.log("ctor");
     }
    
     componentWillMount() {
         let nextMove = this.getNextMove(this.props.sides);
         this.props.setNextMove(nextMove);
-        console.log("componentWillMount");
+        //console.log("componentWillMount");
     }
 
     
     componentWillReceiveProps(nextProps) {
-        console.log("componentWillReceiveProps");
+        //console.log("componentWillReceiveProps");
         if (nextProps.sides != this.state.sides) {
             let nextMove = this.getNextMove(nextProps.sides);
             this.props.setNextMove(GAME_CONSTS.LEFT);
