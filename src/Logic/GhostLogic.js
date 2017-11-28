@@ -1,36 +1,36 @@
 import React, { Component } from 'react';
 import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
 import { GAME_CONSTS } from "../components/GamePieces/Consts";
+import GridPiece from "./GridPiece";
 
-function Loc(x, y) {
-    return { x, y };
-}
 
-class GhostLogic {
 
-    constructor(value, location, sides) {
-        this.sides = sides;
-        this.x = location.x;
-        this.y = location.y;
+class GhostLogic extends GridPiece{
+
+    constructor(component) {
+        super(PIECES_TYPES.GHOST,component);
         this.nextLoc = GAME_CONSTS.CENTER;
-        this.value = React.cloneElement(
-            value,
+        this.component = React.cloneElement(
+            component,
             {
                 setNextMove: (loc) => { this.nextLoc = loc; },
             }
         )
+        console.log(component);
+
 
     }
 
 
-/**
- * updates peice location and validates move to be legal.
- * @param {*} sides surround matrix
- */
+    /**
+     * updates peice location and validates move to be legal.
+     * @param {*} sides surround matrix
+     */
     updateLocation(sides) {
-       
-        this.value = React.cloneElement(
-             this.value ,
+        let Loc = (x, y) => ({ x, y });
+      
+        this.component = React.cloneElement(
+            this.component,
             {
                 sides: sides,
             }
@@ -64,24 +64,9 @@ class GhostLogic {
 
         }
 
-        return this.getLocation();
+        return this.Location();
     }
 
-
-    getType() {
-        return PIECES_TYPES.GHOST;
-    }
-
-    getLocation() {
-        return {
-            x: this.x,
-            y: this.y
-        }
-    }
-
-    getComponent() {
-        return this.value;
-    }
 
 }
 

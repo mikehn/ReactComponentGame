@@ -14,7 +14,7 @@ export default class App extends Component {
             data: [],
         };
 
-        this.gameLogic = new GameLogic(this.onGameStep,GameSettings);
+        this.gameLogic = new GameLogic(GameSettings);
         
     }
 
@@ -22,19 +22,12 @@ export default class App extends Component {
         this.gameLogic.startGame();
     }
 
-    onGameStep =(gridData)=>{
-       
-        this.setState((prev,props) => ({
-                data: gridData,
-        }))
-    };
-
     render() {
         return (
             <div className="App">
                <Banner/>
                
-               <GameGrid data={this.state.data} 
+               <GameGrid 
                          size={GameSettings.cubeSize}
                          xBlocks={GameSettings.xBlocks} 
                          yBlocks={GameSettings.yBlocks} 

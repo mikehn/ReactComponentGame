@@ -5,7 +5,7 @@ import { GAME_CONSTS } from "../GamePieces/Consts";
 export default class Ghost extends Component {
     constructor(props) {
         super(props);
-
+        console.log("Ctor");
         this.state = {
             backgroundColor: props.backgroundColor, //TODO: Should be a prop mapping to this.
             sides: props.sides,
@@ -19,12 +19,12 @@ export default class Ghost extends Component {
     componentWillMount() {
         let nextMove = this.getNextMove(this.props.sides);
         this.props.setNextMove(nextMove);
-        //console.log("componentWillMount");
+        console.log("componentWillMount");
     }
 
     
     componentWillReceiveProps(nextProps) {
-        //console.log("componentWillReceiveProps");
+        console.log("componentWillReceiveProps");
         if (nextProps.sides != this.state.sides) {
             let nextMove = this.getNextMove(nextProps.sides);
             this.props.setNextMove(GAME_CONSTS.LEFT);

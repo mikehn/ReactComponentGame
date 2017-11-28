@@ -5,7 +5,7 @@ import Wall from './GamePieces/Wall';
 import { matrixOp } from '../Logic/Utils';
 import "../style/grid.css";
 import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
-
+import { GAME_STATE } from '../components/GamePieces/Consts';
 let blockId = (x, y) => `m${x}_${y}`;
 
 
@@ -14,7 +14,8 @@ class GameGrid extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isInited: false
+            isInited: false,
+            gameState: GAME_STATE.PRE_GAME
         }
     }
 
@@ -31,47 +32,30 @@ class GameGrid extends Component {
 
     renderGrid(grid) {
         let components = [];
-        console.log(grid);
-        matrixOp(grid, (x, y, mat) => {
+        matrixOp(this.props.logic.getComponents(), (x, y, mat) => {
 
-            components.push(<GridBlock key={blockId(x, y)}
-                blocId={blockId(x, y)}
-                type={mat[y][x].type}
-                size={this.props.size}
-                surround={this.props.logic.getTypeSurround({ x, y }, 1)} >
-                {(mat[y][x].type == PIECES_TYPES.GHOST) ? mat[y][x].value.getComponent() : ""}
-            </GridBlock>);
-
+            components.push(
+                <GridBlock key={blockId(x, y)} blocId={blockId(x, y)} size={this.props.size} >
+                    {mat[y][x]}
+                </GridBlock>
+            );
         });
         return components;
     }
 
     componentDidMount() {
 
-       // var width = this.props.xBlocks * this.props.size;
+        // var width = this.props.xBlocks * this.props.size;
         document.getElementById("pm-grid").style.gridTemplateColumns = `repeat(${this.props.xBlocks},${(this.props.size - 1)}px)`;
         document.getElementById("pm-grid").style.gridTemplateRows = `repeat(${this.props.yBlocks},${(this.props.size - 1)}px)`;
         document.getElementById("pm-grid").style.gridTemplateAreas = this.generateBlockStrings(this.props.xBlocks, this.props.yBlocks);
-        console.log(this.props.data);
 
-
-        //document.getElementById(blockId(0,0)).style.gridArea = blockId(0,0);
-
-    }
-    componentWillReceiveProps(nextProps) {
-        if (!this.state.isInited && nextProps.data.length > 0) {
-            this.setState(() => ({ isInited: true }),
-                () => { 
-                    matrixOp(nextProps.data,(x,y,mat)=>{
-                        document.getElementById(blockId(x,y)).style.gridArea = blockId(x,y);
-                    } );
-                });
+        for (let y = 0; y < this.props.yBlocks; ++y) {
+            for (let x = 0; x < this.props.xBlocks; ++x) {
+                document.getElementById(blockId(x, y)).style.gridArea = blockId(x, y);
+            }
         }
-
     }
-
-
-
 
     generateBlockStrings(width, height) {
         let blockStr = "";

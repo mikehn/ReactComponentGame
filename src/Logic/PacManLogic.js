@@ -1,10 +1,12 @@
+import React, { Component } from 'react';
+import GridPiece from "./GridPiece";
+import Pacman from "../components/GamePieces/PacMan";
 import {PIECES_TYPES} from '../components/GamePieces/PiecesTypes';
 
-class PacManLogic {
+class PacManLogic extends GridPiece{
 
-    constructor(location) {
-        this.x = location.x;
-        this.y = location.y;
+    constructor(size) {
+        super(PIECES_TYPES.PACKMAN,<Pacman size={size/2}/>);
     }
 
     /**
@@ -26,22 +28,13 @@ class PacManLogic {
             if(sides[y][x] === PIECES_TYPES.EMPTY){
                 this.x+=(x-1); //-1 corrdinate base correction (0,1,2) -> (-1,0,1)
                 this.y+=(y-1);
-                return this.getLocation();
+                return this.Location();
             }
         }
-        return this.getLocation();
+        return this.Location();
     }
 
-    getType(){
-        return PIECES_TYPES.PACKMAN;
-    }
 
-    getLocation(){
-        return {
-            x:this.x,
-            y:this.y
-        }
-    }
 }
 
 export default PacManLogic;

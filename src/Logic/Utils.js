@@ -14,3 +14,5 @@ export function matrixOp(matrix, op) {
         }
     }
 }
+
+export function blockId(x, y) {return `m${x}_${y}`};
