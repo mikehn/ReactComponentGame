@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
-import { GAME_CONSTS } from "../components/GamePieces/Consts";
+import { MOVE_DIRECTION } from "../components/GamePieces/Consts";
 import GridPiece from "./GridPiece";
 
 
@@ -9,7 +9,7 @@ class GhostLogic extends GridPiece{
 
     constructor(component) {
         super(PIECES_TYPES.GHOST,component);
-        this.nextLoc = GAME_CONSTS.CENTER;
+        this.nextLoc = MOVE_DIRECTION.CENTER;
         this.component = React.cloneElement(
             component,
             {
@@ -21,6 +21,20 @@ class GhostLogic extends GridPiece{
 
     }
 
+    getSideObject(sides){
+        return {
+            topLeft:sides[0][0],
+            top:sides[0][1],
+            topRight:sides[0][2],
+            left:sides[1][0],
+            right:sides[1][2],
+            bottomLeft:sides[2][0],
+            bottom:sides[2][1],
+            bottomRight:sides[2][2]
+            
+        }
+    }
+
 
     /**
      * updates peice location and validates move to be legal.
@@ -28,26 +42,20 @@ class GhostLogic extends GridPiece{
      */
     updateLocation(sides) {
         let Loc = (x, y) => ({ x, y });
-      
-        this.component = React.cloneElement(
-            this.component,
-            {
-                sides: sides,
-            }
-        );
+        let lastMoveStatus = true;
         this.sides = sides; // not sure if needed
         let cordMap = {};
         let selfX = 1;
         let selfY = 1;
-        if (!GAME_CONSTS.DIRECTIONS.includes(this.nextLoc)) {
-            //TODO: Mark ERROR
-            this.nextLoc = GAME_CONSTS.CENTER;
+        if (!MOVE_DIRECTION.DIRECTIONS.includes(this.nextLoc)) {
+            lastMoveStatus = false;
+            this.nextLoc = MOVE_DIRECTION.CENTER;
         }
-        cordMap[GAME_CONSTS.UP] = Loc(selfX, 0);
-        cordMap[GAME_CONSTS.DOWN] = Loc(selfX, 2);
-        cordMap[GAME_CONSTS.LEFT] = Loc(0, selfY);
-        cordMap[GAME_CONSTS.RIGHT] = Loc(2, selfY);
-        cordMap[GAME_CONSTS.CENTER] = Loc(selfX, selfY);
+        cordMap[MOVE_DIRECTION.TOP] = Loc(selfX, 0);
+        cordMap[MOVE_DIRECTION.BOTTOM] = Loc(selfX, 2);
+        cordMap[MOVE_DIRECTION.LEFT] = Loc(0, selfY);
+        cordMap[MOVE_DIRECTION.RIGHT] = Loc(2, selfY);
+        cordMap[MOVE_DIRECTION.CENTER] = Loc(selfX, selfY);
 
         let newSelf = cordMap[this.nextLoc];
 
@@ -60,9 +68,17 @@ class GhostLogic extends GridPiece{
                 break;
             case PIECES_TYPES.WALL:
             case PIECES_TYPES.GHOST:
-            // ILLEGAL MOVE
+                lastMoveStatus = false;
 
         }
+
+        this.component = React.cloneElement(
+            this.component,
+            {
+                sides: this.getSideObject(sides),
+                lastMoveStatus
+            }
+        );
 
         return this.Location();
     }

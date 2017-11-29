@@ -1,5 +1,3 @@
-(A) Create ghost prop Matrix surround  @ghost
-(A) Create ghost prop Callback ()=> return usertFunc() surround  @ghost
 (A) Create ghost prop state = [NEXT_TO_PACMAN,NEXT_TO_ENEMY,NEXT_TO_WALL,CLEAR]  @ghost
 (A) Create ghost prop lastMoveStatus  @ghost
 (A) Create ghost prop winnerMessageCallBack ?  @ghost

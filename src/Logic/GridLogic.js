@@ -113,6 +113,11 @@ export default class GridLogic {
 
     }
 
+
+    getLogicGrid(){
+        return this.grid;
+    }
+
     getComponents() {
 
         let compMat = new Array(this.yBlocks);

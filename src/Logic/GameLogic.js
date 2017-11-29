@@ -27,9 +27,9 @@ export default class GameLogic {
         this.grid = new GridLogic(xBlocks,yBlocks,wallPercent);
         this.initializeGameComponents();
     }
-//TODO: fix
+//TODO: might not be needed
     getComponents(){
-        return this.grid.getComponents();
+        return this.grid.getLogicGrid();
     }
 
     setNextMove(direction){
@@ -61,6 +61,7 @@ export default class GameLogic {
         this.gameStepInterval = setInterval(
            
             () => {
+               
                 this.grid.getPlayers().forEach((player)=>{
                     this.updatePiece(player);
                 })

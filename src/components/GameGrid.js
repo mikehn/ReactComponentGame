@@ -15,9 +15,12 @@ class GameGrid extends Component {
         super(props);
         this.state = {
             isInited: false,
-            gameState: GAME_STATE.PRE_GAME
+            gameState: GAME_STATE.PRE_GAME,
+            tick: false
         }
+
     }
+
 
     render() {
         return (
@@ -29,13 +32,12 @@ class GameGrid extends Component {
         );
     }
 
-
+    
     renderGrid(grid) {
         let components = [];
         matrixOp(this.props.logic.getComponents(), (x, y, mat) => {
-
             components.push(
-                <GridBlock key={blockId(x, y)} blocId={blockId(x, y)} size={this.props.size} >
+                <GridBlock key={blockId(x, y)} blocId={blockId(x, y)} size={this.props.size} refreshRate={this.props.logic.refreshRate} >
                     {mat[y][x]}
                 </GridBlock>
             );

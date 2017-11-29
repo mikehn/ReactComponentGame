@@ -1,16 +1,24 @@
-export const GAME_CONSTS = {
-    CENTER:-1,
-    UP:0,
-    RIGHT:1,
-    DOWN:2,
-    LEFT:3,
-    get DIRECTIONS() {return [this.CENTER,this.UP,this.RIGHT,this.DOWN,this.LEFT]}
+export const MOVE_DIRECTION = {
+    CENTER:"center",
+    TOP:"up",
+    RIGHT:"right",
+    BOTTOM:"bottom",
+    LEFT:"left",
+    get DIRECTIONS() {return [this.CENTER,this.TOP,this.RIGHT,this.BOTTOM,this.LEFT]}
+};
+
+export const PIECES_TYPES = {
+    UNDEF: -1,
+    EMPTY: 0,
+    WALL: 1,
+    PACKMAN: 2,
+    GHOST: 3
 };
 
 export const GAME_STATE = {
     PRE_GAME:0,
     PLAY:1,
-    WIN:2,
-    
-    
+    WIN:2,  
 };
+
+

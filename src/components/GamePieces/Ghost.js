@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../../style/ghost.css";
-import { GAME_CONSTS } from "../GamePieces/Consts";
+import { MOVE_DIRECTION,PIECES_TYPES } from "../GamePieces/Consts";
 
 export default class Ghost extends Component {
     constructor(props) {
@@ -8,7 +8,7 @@ export default class Ghost extends Component {
         console.log("Ctor");
         this.state = {
             backgroundColor: props.backgroundColor, //TODO: Should be a prop mapping to this.
-            sides: props.sides,
+            lastMove:"right"
         }
         
         //this.props.setNextMoveLogic(()=>GAME_CONSTS.RIGHT);
@@ -16,24 +16,30 @@ export default class Ghost extends Component {
         //console.log("ctor");
     }
    
-    componentWillMount() {
-        let nextMove = this.getNextMove(this.props.sides);
-        this.props.setNextMove(nextMove);
+    componentWillMount() {    
         console.log("componentWillMount");
     }
 
-    
     componentWillReceiveProps(nextProps) {
-        console.log("componentWillReceiveProps");
-        if (nextProps.sides != this.state.sides) {
+       // console.log("componentWillReceiveProps");
+       console.log(nextProps.lastMoveStatus);
+        if (nextProps.sides != this.props.sides) {
             let nextMove = this.getNextMove(nextProps.sides);
-            this.props.setNextMove(GAME_CONSTS.LEFT);
+            this.props.setNextMove(nextMove);
         }
     }
 
-    getNextMove(sides) {
-        return GAME_CONSTS.RIGHT;
-    }
+
+    getNextMove = (sides) => {
+        if( sides[this.state.lastMove] != PIECES_TYPES.EMPTY ){
+            let dSize = MOVE_DIRECTION.DIRECTIONS.length
+            let nextMove = MOVE_DIRECTION.DIRECTIONS[Math.floor(Math.random()*dSize)];
+            console.log(nextMove);
+            this.setState(()=>({lastMove:nextMove}));
+            return nextMove;
+        }
+        return this.state.lastMove;
+    };
 
     render() {
         return (
