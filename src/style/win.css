@@ -1,0 +1,157 @@
+
+@font-face {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Iceland'), local('Iceland-Regular'), url(http://themes.googleusercontent.com/static/fonts/iceland/v3/F6LYTZLHrG9BNYXRjU7RSw.woff) format('woff');
+  }
+  
+  .win-board{
+    z-index: 100;
+    width:400px;
+    background-color: #1f003a;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    border-radius:20px;
+    border: 8px solid #dd3300;
+    padding:20px;
+    box-shadow: 0px 0px 28px 8px rgba(250,230,15,1);
+  }
+  
+  
+  
+  
+  .win-board a{
+    text-decoration:none; 
+    transition: all 0.5s;
+  }
+  
+  .win-board .bmsg a{
+    font-size:2.2em;
+    color:#FF1177;
+    font-family:Iceland;
+  }
+  
+  .middiv {
+      top: 50%;
+      left: 50%;
+      margin-top: -9em; 
+      margin-left: -15em; 
+      position:fixed;
+  }
+  
+  .win-board .bname a{
+    font-size:3.8em;
+    animation: neon1 1.5s ease-in-out infinite alternate;
+    
+    font-family:Iceland;
+  }
+  .win-board .bmsg :hover{
+    animation: neon2 1.5s ease-in-out infinite alternate;
+  }
+  
+  .win-board2 .btitle2{
+    font-size:5.4em;
+    color:#FFDD1B;
+    font-family:Pacifico;
+  }
+  
+  .win-board .btitle  {
+    font-size:5.4em; 
+    color:#ffffff;  
+    animation: neon3 1.5s ease-in-out infinite alternate; 
+  }
+  
+  .win-board .bmsg2 :hover{ 
+    animation: neon3 1.5s ease-in-out infinite alternate; 
+  }
+  
+  
+  .win-board div a:hover{
+  color:#ffffff;  
+  }
+  
+  
+  
+  
+  /*glow*/
+  @keyframes neon1 {
+    0% {
+      color:#228DFF;
+    }
+    28% {
+      text-shadow: 0 0 10px #fff,
+                 0 0 20px  #fff,
+                 0 0 30px  #fff,
+                 0 0 40px  #FF1177,
+                 0 0 70px  #FF1177,
+                 0 0 80px  #FF1177,
+                 0 0 100px #FF1177,
+                 0 0 150px #FF1177;
+    }
+    100%{
+      text-shadow: 0 0 5px #fff,
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #FF1177,
+                 0 0 35px #FF1177,
+                 0 0 40px #FF1177,
+                 0 0 50px #FF1177,
+                 0 0 75px #FF1177;
+    }
+  }
+  
+  @keyframes neon2 {
+    from {
+      text-shadow: 0 0 10px #fff,
+                 0 0 20px  #fff,
+                 0 0 30px  #fff,
+                 0 0 40px  #228DFF,
+                 0 0 70px  #228DFF,
+                 0 0 80px  #228DFF,
+                 0 0 100px #228DFF,
+                 0 0 150px #228DFF;
+    }
+    to {
+      text-shadow: 0 0 5px #fff,
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #228DFF,
+                 0 0 35px #228DFF,
+                 0 0 40px #228DFF,
+                 0 0 50px #228DFF,
+                 0 0 75px #228DFF;
+    }
+  }
+  
+  @keyframes neon3 {
+    from {
+      text-shadow: 0 0 10px #fff,
+                 0 0 20px  #fff,
+                 0 0 30px  #fff,
+                 0 0 40px  #FFDD1B,
+                 0 0 70px  #FFDD1B,
+                 0 0 80px  #FFDD1B,
+                 0 0 100px #FFDD1B,
+                 0 0 150px #FFDD1B;
+    }
+    to {
+      text-shadow: 0 0 5px #fff,
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #FFDD1B,
+                 0 0 35px #FFDD1B,
+                 0 0 40px #FFDD1B,
+                 0 0 50px #FFDD1B,
+                 0 0 75px #FFDD1B;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  

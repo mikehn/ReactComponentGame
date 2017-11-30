@@ -10,7 +10,7 @@ var GameSettings = {
     cubeSize:60,
     get xBlocks(){return getElementsCount(window.innerWidth, this.cubeSize, 0.95)},
     get yBlocks(){return getElementsCount(window.innerHeight, this.cubeSize, 0.86)},
-    wallPercent: 0.1,
+    wallPercent: 0.6,
     refreshDelay: 400
 };
 

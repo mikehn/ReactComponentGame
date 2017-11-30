@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { MOVE_DIRECTION, PIECES_TYPES } from "../components/GamePieces/Consts";
 import GridPiece from "./GridPiece";
-
+import WinMessage from "../components/WinMessage";
 
 
 class GhostLogic extends GridPiece {
 
     constructor(component) {
         super(PIECES_TYPES.GHOST, component);
-        console.log(component.type.name);
+        this.name = component.type.name;
         this.nextLoc = MOVE_DIRECTION.CENTER;
         this.component = React.cloneElement(
             component,
             {
                 setNextMove: (loc) => { this.nextLoc = loc; },
-                lastMoveSuccess:true,
-                winMessage: (msg)=>""
+                lastMoveSuccess: true,
+                winMessage: (msg) => ""
             }
         )
 
@@ -42,7 +42,11 @@ class GhostLogic extends GridPiece {
                 });
                 return res;
             },
-            sideArray: () => {
+            directions: () => ["topLeft", "top", "topRight",
+                "left", "right",
+                "bottomLeft", "bottom", "bottomRight"]
+            ,
+            elements: () => {
                 let sideArr = [];
                 let idx = 0;
                 for (let i = 0; i < sides.length; ++i) {
@@ -57,8 +61,8 @@ class GhostLogic extends GridPiece {
     }
 
 
-    getWinComponent(msg){
-        return "";
+    getWinComponent(msg) {
+        return <WinMessage name={this.name} msg={msg} />;
     }
 
     /**
@@ -87,7 +91,7 @@ class GhostLogic extends GridPiece {
 
         switch (sides[newSelf.y][newSelf.x]) {
             case PIECES_TYPES.PACKMAN:
-                isWin=true;
+                isWin = true;
             case PIECES_TYPES.EMPTY:
                 this.x += (newSelf.x - 1);//-1 corrdinate base correction (0,1,2) -> (-1,0,1)
                 this.y += (newSelf.y - 1);
@@ -103,7 +107,7 @@ class GhostLogic extends GridPiece {
             {
                 sides: this.getSideObject(sides),
                 lastMoveSuccess,
-                winMessage: (isWin ? (msg)=>this.getWinComponent(msg):(msg)=>"")
+                winMessage: (isWin ? (msg) => this.getWinComponent(msg) : (msg) => "")
             }
         );
 
