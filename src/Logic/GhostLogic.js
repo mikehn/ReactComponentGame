@@ -10,16 +10,21 @@ class GhostLogic extends GridPiece {
         super(PIECES_TYPES.GHOST, component);
         this.name = component.type.name;
         this.nextLoc = MOVE_DIRECTION.CENTER;
+        this.moveNumber=0;
+        this.lastMoveSuccess = true;
+        this.isWin=false;
         this.component = React.cloneElement(
             component,
             {
-                setNextMove: (loc) => { this.nextLoc = loc; },
-                lastMoveSuccess: true,
+                setNextMove: (loc) => { this.nextLoc = loc; this.moveNumber++},
+                lastMoveSuccess: this.lastMoveSuccess,
                 winMessage: (msg) => ""
             }
         )
-
-
+    }
+    getComponent(sides){
+        this.updateComponent(sides);
+        return this.component;
     }
 
     getSideObject(sides) {
@@ -65,20 +70,45 @@ class GhostLogic extends GridPiece {
         return <WinMessage name={this.name} msg={msg} />;
     }
 
+    updateLocation(sides) {
+        this.updateComponent(sides);
+        return this.validateMove(sides);
+    }
+
+    updateComponent(sides){
+        this.component = React.cloneElement(
+            this.component,
+            {
+                sides: this.getSideObject(sides),
+                lastMoveSuccess:this.lastMoveSuccess,
+                winMessage: (this.isWin ? (msg) => this.getWinComponent(msg) : (msg) => "")
+            }
+        );
+    }
+
     /**
      * updates peice location and validates move to be legal.
      * @param {*} sides surround matrix
      */
-    updateLocation(sides) {
+    validateMove(sides) {
         let Loc = (x, y) => ({ x, y });
-        let lastMoveSuccess = true;
         this.sides = sides; // not sure if needed
         let cordMap = {};
         let selfX = 1;
-        let isWin = false;
         let selfY = 1;
+
+        // this.component = React.cloneElement(
+        //     this.component,
+        //     {
+        //         sides: this.getSideObject(sides),
+        //         lastMoveSuccess:this.lastMoveSuccess,
+        //         winMessage: (this.isWin ? (msg) => this.getWinComponent(msg) : (msg) => "")
+        //     }
+        // );
+        
+
         if (!MOVE_DIRECTION.DIRECTIONS.includes(this.nextLoc)) {
-            lastMoveSuccess = false;
+            this.lastMoveSuccess = false;
             this.nextLoc = MOVE_DIRECTION.CENTER;
         }
         cordMap[MOVE_DIRECTION.TOP] = Loc(selfX, 0);
@@ -88,34 +118,25 @@ class GhostLogic extends GridPiece {
         cordMap[MOVE_DIRECTION.CENTER] = Loc(selfX, selfY);
 
         let newSelf = cordMap[this.nextLoc];
+        this.lastMoveSuccess=true;
 
         switch (sides[newSelf.y][newSelf.x]) {
             case PIECES_TYPES.PACKMAN:
-                isWin = true;
+                this.isWin = true;
                 break;
             case PIECES_TYPES.EMPTY:
                 this.x += (newSelf.x - 1);//-1 corrdinate base correction (0,1,2) -> (-1,0,1)
                 this.y += (newSelf.y - 1);
                 break;
             case PIECES_TYPES.WALL:
-                // fall through
+            // fall through
             case PIECES_TYPES.GHOST:
-                lastMoveSuccess = false;
+                this.lastMoveSuccess = false;
                 break;
             default:
                 break;
         }
-
-        this.component = React.cloneElement(
-            this.component,
-            {
-                sides: this.getSideObject(sides),
-                lastMoveSuccess,
-                winMessage: (isWin ? (msg) => this.getWinComponent(msg) : (msg) => "")
-            }
-        );
-
-        this.isWinner = isWin;
+        this.isWinner = this.isWin;
         return this.Location();
     }
 

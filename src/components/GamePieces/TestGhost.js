@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "../../style/ghost.css";
 import GhostEye from "./GhostEye";
 import { MOVE_DIRECTION, PIECES_TYPES } from "../GamePieces/Consts";
-
+import { randomIntFromInterval } from "../../Logic/Utils";
 
 const DEFULAT_COLOR = "#c5a0e5";
 const BAD_MOVE_COLOR = "red";
@@ -10,23 +10,15 @@ const BAD_MOVE_COLOR = "red";
 export default class TestGhost extends Component {
     constructor(props) {
         super(props);
-        console.log("Ctor");
         this.state = {
-            backgroundColor: DEFULAT_COLOR, //TODO: Should be a prop mapping to this.
-            lastMove: "right"
+            backgroundColor: DEFULAT_COLOR,
         }
+        this.lastMove = "right";
 
         //this.props.setNextMoveLogic(()=>GAME_CONSTS.RIGHT);
-
-        //console.log("ctor");
-    }
-
-    componentWillMount() {
-        console.log("componentWillMount");
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log("componentWillReceiveProps");
         if (!nextProps.lastMoveSuccess) {
             this.setState(() => ({ backgroundColor: BAD_MOVE_COLOR }))
         } else {
@@ -49,22 +41,29 @@ export default class TestGhost extends Component {
      *  let whatsOnTop = sides["top"];
      */
     getNextMove = (sides) => {
-
+        let pacmanDirection = null;
+        let freeDirections = [];
         MOVE_DIRECTION.DIRECTIONS.forEach(direction => {
-           
-            if (sides[direction] === PIECES_TYPES.PACKMAN){
-                console.log("IM close");
-                return direction;
+
+            if (sides[direction] === PIECES_TYPES.PACMAN) {
+                pacmanDirection = direction;
+            } else if (sides[direction] === PIECES_TYPES.EMPTY) {
+                freeDirections.push(direction);
             }
         });
 
-        if (sides[this.state.lastMove] !== PIECES_TYPES.EMPTY) {
-            let dSize = MOVE_DIRECTION.DIRECTIONS.length
-            let nextMove = MOVE_DIRECTION.DIRECTIONS[Math.floor(Math.random() * dSize)];
-            this.setState(() => ({ lastMove: nextMove }));
-            return nextMove;
+        if (pacmanDirection !== null)
+            return pacmanDirection;
+
+        if (freeDirections.length === 0)
+            return MOVE_DIRECTION.CENTER;
+
+        if (sides[this.lastMove] !== PIECES_TYPES.EMPTY) {
+            let randomIdx = randomIntFromInterval(freeDirections.length)
+            this.lastMove = freeDirections[randomIdx];
         }
-        return this.state.lastMove;
+
+        return this.lastMove;
     };
 
     render() {

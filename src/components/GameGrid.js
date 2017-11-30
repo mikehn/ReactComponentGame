@@ -28,12 +28,17 @@ class GameGrid extends Component {
         );
     }
 
-    
+
     renderGrid(grid) {
         let components = [];
         matrixOp(this.props.logic.getComponents(), (x, y, mat) => {
             components.push(
-                <GridBlock key={blockId(x, y)} blocId={blockId(x, y)} size={this.props.size} refreshRate={this.props.logic.refreshRate} state={()=>this.props.logic.gameState}>
+                <GridBlock key={blockId(x, y)}
+                    blocId={blockId(x, y)}
+                    size={this.props.size}
+                    refreshRate={this.props.logic.refreshRate}
+                    state={() => this.props.logic.gameState}
+                    logic={this.props.logic}>
                     {mat[y][x]}
                 </GridBlock>
             );

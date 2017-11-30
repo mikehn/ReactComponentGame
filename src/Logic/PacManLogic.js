@@ -6,7 +6,7 @@ import {PIECES_TYPES} from '../components/GamePieces/PiecesTypes';
 class PacManLogic extends GridPiece{
 
     constructor(size) {
-        super(PIECES_TYPES.PACKMAN,<Pacman size={size/2}/>);
+        super(PIECES_TYPES.PACMAN,<Pacman size={size/2}/>);
     }
 
     /**
