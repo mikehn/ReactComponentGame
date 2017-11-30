@@ -1,6 +1,6 @@
 export const MOVE_DIRECTION = {
     CENTER:"center",
-    TOP:"up",
+    TOP:"top",
     RIGHT:"right",
     BOTTOM:"bottom",
     LEFT:"left",

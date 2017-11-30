@@ -1,40 +1,65 @@
 import React, { Component } from 'react';
-import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
-import { MOVE_DIRECTION } from "../components/GamePieces/Consts";
+import { MOVE_DIRECTION, PIECES_TYPES } from "../components/GamePieces/Consts";
 import GridPiece from "./GridPiece";
 
 
 
-class GhostLogic extends GridPiece{
+class GhostLogic extends GridPiece {
 
     constructor(component) {
-        super(PIECES_TYPES.GHOST,component);
+        super(PIECES_TYPES.GHOST, component);
+        console.log(component.type.name);
         this.nextLoc = MOVE_DIRECTION.CENTER;
         this.component = React.cloneElement(
             component,
             {
                 setNextMove: (loc) => { this.nextLoc = loc; },
+                lastMoveSuccess:true,
+                winMessage: (msg)=>""
             }
         )
-        console.log(component);
 
 
     }
 
-    getSideObject(sides){
+    getSideObject(sides) {
         return {
-            topLeft:sides[0][0],
-            top:sides[0][1],
-            topRight:sides[0][2],
-            left:sides[1][0],
-            right:sides[1][2],
-            bottomLeft:sides[2][0],
-            bottom:sides[2][1],
-            bottomRight:sides[2][2]
-            
+            topLeft: sides[0][0],
+            top: sides[0][1],
+            topRight: sides[0][2],
+            left: sides[1][0],
+            right: sides[1][2],
+            bottomLeft: sides[2][0],
+            bottom: sides[2][1],
+            bottomRight: sides[2][2],
+            isNextTo: (type) => {
+                let res = false;
+                this.sideArray().forEach(element => {
+                    if (element == type) {
+                        res = true;
+                        return;
+                    }
+                });
+                return res;
+            },
+            sideArray: () => {
+                let sideArr = [];
+                let idx = 0;
+                for (let i = 0; i < sides.length; ++i) {
+                    for (let j = 0; j < sides[i].length; ++j) {
+                        if (!(i == 1 && j == 1))
+                            sideArr[++idx] = sides[i][j];
+                    }
+                }
+                return sideArr;
+            }
         }
     }
 
+
+    getWinComponent(msg){
+        return "";
+    }
 
     /**
      * updates peice location and validates move to be legal.
@@ -42,13 +67,14 @@ class GhostLogic extends GridPiece{
      */
     updateLocation(sides) {
         let Loc = (x, y) => ({ x, y });
-        let lastMoveStatus = true;
+        let lastMoveSuccess = true;
         this.sides = sides; // not sure if needed
         let cordMap = {};
         let selfX = 1;
+        let isWin = false;
         let selfY = 1;
         if (!MOVE_DIRECTION.DIRECTIONS.includes(this.nextLoc)) {
-            lastMoveStatus = false;
+            lastMoveSuccess = false;
             this.nextLoc = MOVE_DIRECTION.CENTER;
         }
         cordMap[MOVE_DIRECTION.TOP] = Loc(selfX, 0);
@@ -61,14 +87,14 @@ class GhostLogic extends GridPiece{
 
         switch (sides[newSelf.y][newSelf.x]) {
             case PIECES_TYPES.PACKMAN:
-            // TODO: win logic
+                isWin=true;
             case PIECES_TYPES.EMPTY:
                 this.x += (newSelf.x - 1);//-1 corrdinate base correction (0,1,2) -> (-1,0,1)
                 this.y += (newSelf.y - 1);
                 break;
             case PIECES_TYPES.WALL:
             case PIECES_TYPES.GHOST:
-                lastMoveStatus = false;
+                lastMoveSuccess = false;
 
         }
 
@@ -76,7 +102,8 @@ class GhostLogic extends GridPiece{
             this.component,
             {
                 sides: this.getSideObject(sides),
-                lastMoveStatus
+                lastMoveSuccess,
+                winMessage: (isWin ? (msg)=>this.getWinComponent(msg):(msg)=>"")
             }
         );
 

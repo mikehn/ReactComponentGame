@@ -4,7 +4,7 @@ import GhostLogic from './GhostLogic';
 import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
 import { randomIntFromInterval, Sqr, matrixOp } from './Utils';
 import React, { Component}  from 'react';
-import Ghost from "../components/GamePieces/Ghost";
+import TestGhost from "../components/GamePieces/TestGhost";
 
  
 //TODO: move to settings
@@ -39,7 +39,7 @@ export default class GameLogic {
     // TODO: remove to external file.
     getGhosComponentSet = () => {
         let gSet = new Set()
-        gSet.add(<Ghost size={40} />);
+        gSet.add(<TestGhost size={40} />);
        
         return gSet;
     }
