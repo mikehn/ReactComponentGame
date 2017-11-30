@@ -33,7 +33,7 @@ export default class TestGhost extends Component {
             this.setState(() => ({ backgroundColor: DEFULAT_COLOR }))
         }
 
-        if (nextProps.sides != this.props.sides) {
+        if (nextProps.sides !== this.props.sides) {
             let nextMove = this.getNextMove(nextProps.sides);
             this.props.setNextMove(nextMove);
         }
@@ -52,13 +52,13 @@ export default class TestGhost extends Component {
 
         MOVE_DIRECTION.DIRECTIONS.forEach(direction => {
            
-            if (sides[direction] == PIECES_TYPES.PACKMAN){
+            if (sides[direction] === PIECES_TYPES.PACKMAN){
                 console.log("IM close");
                 return direction;
             }
         });
 
-        if (sides[this.state.lastMove] != PIECES_TYPES.EMPTY) {
+        if (sides[this.state.lastMove] !== PIECES_TYPES.EMPTY) {
             let dSize = MOVE_DIRECTION.DIRECTIONS.length
             let nextMove = MOVE_DIRECTION.DIRECTIONS[Math.floor(Math.random() * dSize)];
             this.setState(() => ({ lastMove: nextMove }));

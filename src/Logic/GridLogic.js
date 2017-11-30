@@ -48,7 +48,8 @@ export default class GridLogic {
 
         if (FILL_SIDES_WALL) {
             matrixOp(grid, (x, y, matrix) => {
-                if (x == this.xBlocks - 1 || y == this.yBlocks - 1 || x == 0 || y == 0) {
+                if (x === this.xBlocks - 1 || y === this.yBlocks - 1 || 
+                     x === 0 || y === 0) {
                     matrix[y][x] = new WallLogic();
                     this.emptyCells.delete(`${x},${y}`);
                 }
@@ -61,7 +62,7 @@ export default class GridLogic {
         let randomEmptyCell = [...this.emptyCells][randomIntFromInterval(this.emptyCells.size)];
         this.emptyCells.delete(randomEmptyCell);
         randomEmptyCell = randomEmptyCell.split(',').map((val) => {
-            return parseInt(val)
+            return parseInt(val,10);
         });
 
         let randomEmptyLocation = {

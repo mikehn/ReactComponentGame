@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Wall from '../components/GamePieces/Wall';
 import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
 import GridPiece from "./GridPiece";
@@ -14,10 +14,10 @@ export default class WallLogic extends GridPiece{
         return PIECES_TYPES.WALL;
     }
     updateWallSides(sides){
-        let up = sides[0][1] == PIECES_TYPES.WALL;
-        let left = sides[1][0] == PIECES_TYPES.WALL;
-        let right = sides[1][2] == PIECES_TYPES.WALL;
-        let down = sides[2][1] == PIECES_TYPES.WALL;
+        // let up = sides[0][1] == PIECES_TYPES.WALL;
+        // let left = sides[1][0] == PIECES_TYPES.WALL;
+        // let right = sides[1][2] == PIECES_TYPES.WALL;
+        // let down = sides[2][1] == PIECES_TYPES.WALL;
         
     }
 }

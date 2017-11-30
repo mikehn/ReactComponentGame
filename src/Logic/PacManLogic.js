@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import GridPiece from "./GridPiece";
 import Pacman from "../components/GamePieces/PacMan";
 import {PIECES_TYPES} from '../components/GamePieces/PiecesTypes';

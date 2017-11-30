@@ -9,6 +9,7 @@ export default class GridPiece {
         this.y=-1;
         this.isSet=false;
         this.id=null;
+        this.isWinner=false;
     }
 
 
@@ -39,4 +40,5 @@ export default class GridPiece {
     getId(){
         return this.id;
     }
+
 }

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import GridBlock from './GridBlock';
-import PacMan from './GamePieces/PacMan';
-import Wall from './GamePieces/Wall';
 import { matrixOp } from '../Logic/Utils';
 import "../style/grid.css";
-import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
-import { GAME_STATE } from '../components/GamePieces/Consts';
-let blockId = (x, y) => `m${x}_${y}`;
 
+
+let blockId = (x, y) => `m${x}_${y}`;
 
 class GameGrid extends Component {
 
@@ -15,7 +12,6 @@ class GameGrid extends Component {
         super(props);
         this.state = {
             isInited: false,
-            gameState: GAME_STATE.PRE_GAME,
             tick: false
         }
 
@@ -37,7 +33,7 @@ class GameGrid extends Component {
         let components = [];
         matrixOp(this.props.logic.getComponents(), (x, y, mat) => {
             components.push(
-                <GridBlock key={blockId(x, y)} blocId={blockId(x, y)} size={this.props.size} refreshRate={this.props.logic.refreshRate} >
+                <GridBlock key={blockId(x, y)} blocId={blockId(x, y)} size={this.props.size} refreshRate={this.props.logic.refreshRate} state={()=>this.props.logic.gameState}>
                     {mat[y][x]}
                 </GridBlock>
             );

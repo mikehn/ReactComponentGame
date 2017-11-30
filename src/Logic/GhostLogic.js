@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { MOVE_DIRECTION, PIECES_TYPES } from "../components/GamePieces/Consts";
 import GridPiece from "./GridPiece";
 import WinMessage from "../components/WinMessage";
@@ -35,7 +35,7 @@ class GhostLogic extends GridPiece {
             isNextTo: (type) => {
                 let res = false;
                 this.sideArray().forEach(element => {
-                    if (element == type) {
+                    if (element === type) {
                         res = true;
                         return;
                     }
@@ -51,7 +51,7 @@ class GhostLogic extends GridPiece {
                 let idx = 0;
                 for (let i = 0; i < sides.length; ++i) {
                     for (let j = 0; j < sides[i].length; ++j) {
-                        if (!(i == 1 && j == 1))
+                        if (!(i === 1 && j === 1))
                             sideArr[++idx] = sides[i][j];
                     }
                 }
@@ -92,14 +92,18 @@ class GhostLogic extends GridPiece {
         switch (sides[newSelf.y][newSelf.x]) {
             case PIECES_TYPES.PACKMAN:
                 isWin = true;
+                break;
             case PIECES_TYPES.EMPTY:
                 this.x += (newSelf.x - 1);//-1 corrdinate base correction (0,1,2) -> (-1,0,1)
                 this.y += (newSelf.y - 1);
                 break;
             case PIECES_TYPES.WALL:
+                // fall through
             case PIECES_TYPES.GHOST:
                 lastMoveSuccess = false;
-
+                break;
+            default:
+                break;
         }
 
         this.component = React.cloneElement(
@@ -111,6 +115,7 @@ class GhostLogic extends GridPiece {
             }
         );
 
+        this.isWinner = isWin;
         return this.Location();
     }
 

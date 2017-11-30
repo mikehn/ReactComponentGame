@@ -3,10 +3,7 @@ import '../style/Banner.css';
 
 export default class Banner extends Component {
     render() {
-        var size = 60;
-        var xBlocks = Math.floor((window.innerWidth * 0.98) / size);
-        var yBlocks = Math.floor((window.innerHeight * 0.98) / size);
-
+       
         return (
             <div className="banner">
                 <div className="borderBanner">

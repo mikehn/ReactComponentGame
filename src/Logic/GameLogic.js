@@ -1,14 +1,9 @@
 import GridLogic from './GridLogic';
 import PacmanLogic from './PacManLogic';
 import GhostLogic from './GhostLogic';
-import { PIECES_TYPES } from './../components/GamePieces/PiecesTypes';
-import { randomIntFromInterval, Sqr, matrixOp } from './Utils';
-import React, { Component}  from 'react';
+import React from 'react';
 import TestGhost from "../components/GamePieces/TestGhost";
-
- 
-//TODO: move to settings
-const FILL_SIDES_WALL = true;
+import { GAME_STATE } from '../components/GamePieces/Consts';
 
 
 export default class GameLogic {
@@ -25,7 +20,9 @@ export default class GameLogic {
         this.refreshRate = refreshDelay;
         this.cubeSize = cubeSize;
         this.grid = new GridLogic(xBlocks,yBlocks,wallPercent);
+        this.gameState = GAME_STATE.PRE_GAME;
         this.initializeGameComponents();
+        
     }
 //TODO: might not be needed
     getComponents(){
@@ -58,18 +55,24 @@ export default class GameLogic {
     }
 
     startGame() {
+        this.gameState = GAME_STATE.PLAY;
         this.gameStepInterval = setInterval(
            
             () => {
                
                 this.grid.getPlayers().forEach((player)=>{
                     this.updatePiece(player);
+                    if(player.isWinner){
+                        this.endGame();
+                    }
                 })
             },
             this.refreshRate);
     }
 
     endGame() {
+        this.gameState = GAME_STATE.WIN;
+        console.log("WIN");
         clearInterval(this.gameStepInterval);
         //TODO: clean state
     }
