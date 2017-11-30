@@ -6,7 +6,7 @@ class GridBlock extends Component {
   constructor(props) {
     super(props);
     this.componentInterval = null;
-    this.sides=null;
+    this.sides = null;
     this.state = {
       tick: false
     }
@@ -16,13 +16,13 @@ class GridBlock extends Component {
   componentWillMount() {
     if (this.props.children.getType() === PIECES_TYPES.GHOST) {
       this.sides = this.props.logic.getPieceSurround(this.props.children);
-      this.componentInterval = setInterval(() => { 
+      this.componentInterval = setInterval(() => {
         this.sides = this.props.logic.getPieceSurround(this.props.children);
         if (this.props.state() === GAME_STATE.WIN)
           clearInterval(this.componentInterval);
         this.setState((prev) => ({ tick: !prev.tick }));
       },
-        this.props.refreshRate/2);
+        this.props.refreshRate /2);
     }
   }
 
@@ -34,7 +34,6 @@ class GridBlock extends Component {
       </div>
     );
   }
-
 
 
   componentWillUnmount() {
