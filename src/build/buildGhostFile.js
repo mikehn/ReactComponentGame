@@ -28,7 +28,7 @@ function buildText(imports, components) {
     fileText += "\n";
     fileText += "export default [";
     for (var i = 0; i < components.length; ++i) {
-        fileText += components[i] + ",";
+        fileText += "<"+components[i] + " />,";
     }
     return fileText.slice(0, -1) + "];";
 }
