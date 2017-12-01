@@ -6,19 +6,21 @@ import WinMessage from "../components/WinMessage";
 
 class GhostLogic extends GridPiece {
 
-    constructor(component) {
+    constructor(component,size) {
         super(PIECES_TYPES.GHOST, component);
         this.name = component.type.name;
         this.nextLoc = MOVE_DIRECTION.CENTER;
         this.moveNumber = 0;
         this.lastMoveSuccess = true;
         this.isWin = false;
+        console.log(">>>>>"+size);
         this.component = React.cloneElement(
             component,
             {
                 setNextMove: (loc) => { this.nextLoc = loc; this.moveNumber++ },
                 lastMoveSuccess: this.lastMoveSuccess,
-                winMessage: (msg) => ""
+                winMessage: (msg) => "",
+                size: size/2
             }
         )
     }
@@ -104,7 +106,6 @@ class GhostLogic extends GridPiece {
      * @param {*} sides surround matrix
      */
     validateMove(sides) {
-        let Loc = (x, y) => ({ x, y });
         this.sides = sides; // not sure if needed
 
         if (!MOVE_DIRECTION.DIRECTIONS.includes(this.nextLoc)) {

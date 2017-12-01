@@ -1,8 +1,7 @@
 import GridLogic from './GridLogic';
 import PacmanLogic from './PacManLogic';
 import GhostLogic from './GhostLogic';
-import React from 'react';
-import TestGhost from "../components/GamePieces/TestGhost";
+import Ghosts from "../components/GamePieces/Ghosts";
 import { GAME_STATE } from '../components/GamePieces/Consts';
 
 
@@ -33,10 +32,13 @@ export default class GameLogic {
 
     }
 
-    // TODO: remove to external file.
+
     getGhosComponentSet = () => {
         let gSet = new Set()
-        gSet.add(<TestGhost size={40} />);
+        Ghosts.forEach(g => {
+            console.log(g);
+            gSet.add(g);
+        });
 
         return gSet;
     }
@@ -44,7 +46,7 @@ export default class GameLogic {
     initGhosts() {
         let gcSet = this.getGhosComponentSet();
         gcSet.forEach(ghost => {
-            this.grid.addPlayerTypeToGrid(new GhostLogic(ghost));
+            this.grid.addPlayerTypeToGrid(new GhostLogic(ghost,this.cubeSize));
         });
     }
 

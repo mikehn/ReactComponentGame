@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import "../../style/ghost.css";
-import GhostEye from "./GhostEye";
-import { MOVE_DIRECTION, PIECES_TYPES } from "../GamePieces/Consts";
-import { randomIntFromInterval } from "../../Logic/Utils";
+import "../style/ghost.css";
+import GhostEye from "../components/GamePieces/GhostEye";
+import { MOVE_DIRECTION, PIECES_TYPES } from "../components/GamePieces/Consts";
+import { randomIntFromInterval } from "../Logic/Utils";
 
 const DEFULAT_COLOR = "#c5a0e5";
 const BAD_MOVE_COLOR = "red";

@@ -8,6 +8,7 @@
     "react-scripts": "1.0.16"
   },
   "scripts": {
+    "prestart": "node ./src/build/buildGhostFile.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
