@@ -1,5 +1,30 @@
 
-.startButton {
+@font-face {
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Iceland'), local('Iceland-Regular'), url(./ice.woff) format('woff');
+  }
+  
+
+ 
+  .startButton {
+    top: 50%;
+    left: 50%;
+    margin-top: -4em; 
+    margin-left: -4em; 
+    position:fixed;
+    background-color: gold;
+   
+    z-index: 10;
+    font-family:Iceland;
+    font-size: 2em;
+   text-align: center;
+   padding: 46px;
+   box-shadow: inset 6px 6px 6px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+
+}
+.startButton2 {
     box-sizing: border-box;
     cursor: pointer;
     align-self: center;
@@ -30,6 +55,7 @@
 .startButton:hover {
     color: #fff;
     outline: 0;
+    box-shadow: inset 6px 6px 6px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
 }
 
 
@@ -47,10 +73,13 @@
     z-index: -1;
     -webkit-transition: width 150ms ease-in-out;
     transition: width 150ms ease-in-out;
+    box-shadow: inset 6px 6px 6px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
 }
 .startButton:hover {
     color: #fff;
+    box-shadow: inset 6px 6px 6px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
 }
 .startButton:hover:after {
     width: 110%;
+    box-shadow: inset 6px 6px 6px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
 }

@@ -2,7 +2,6 @@ import GridLogic from './GridLogic';
 import PacmanLogic from './PacManLogic';
 import GhostLogic from './GhostLogic';
 import Ghosts from "../components/GamePieces/Ghosts";
-import "./../style/start_button.css";
 import { GAME_STATE } from '../components/GamePieces/Consts';
 
 
