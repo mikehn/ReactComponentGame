@@ -3,6 +3,7 @@ import GameGrid from './components/GameGrid';
 import Banner from './components/Banner';
 import GameLogic from './Logic/GameLogic';
 import {GameSettings} from './Logic/GameSettings';
+import StartButton from "./components/StartButton";
 import './style/App.css';
 
 
@@ -31,8 +32,8 @@ export default class App extends Component {
         return (
             <div className="App">
                <Banner/>
-                <div className="startButton" onClick={this.updateStartGame.bind(this, true)} style={{visibility: this.state.startGame ? "hidden" : "visible"}}>START GAME</div>
-               <GameGrid
+               <StartButton startGame={this.state.startGame} onClick={()=>this.updateStartGame(true)}/>
+                 <GameGrid
                          size={GameSettings.cubeSize}
                          xBlocks={GameSettings.xBlocks} 
                          yBlocks={GameSettings.yBlocks} 
