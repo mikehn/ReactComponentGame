@@ -1,0 +1,56 @@
+
+.startButton {
+    box-sizing: border-box;
+    cursor: pointer;
+    align-self: center;
+    font-size: 1rem;
+    line-height: 1;
+    margin: 20px;
+    padding: 1.2em 2.8em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    background-color: gold;
+    top: 344px;
+    width: 250px;
+    height: 76px;
+    border-color: #8e44ad;
+    border-radius: 0;
+    color: #8e44ad;
+    position: relative;
+    overflow: hidden;
+    z-index: 5;
+    -webkit-transition: color 150ms ease-in-out;
+    transition: color 150ms ease-in-out;
+
+
+}
+.startButton:hover {
+    color: #fff;
+    outline: 0;
+}
+
+
+.startButton:after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 0;
+    height: 100%;
+    background: #8e44ad;
+    z-index: -1;
+    -webkit-transition: width 150ms ease-in-out;
+    transition: width 150ms ease-in-out;
+}
+.startButton:hover {
+    color: #fff;
+}
+.startButton:hover:after {
+    width: 110%;
+}

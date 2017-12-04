@@ -12,22 +12,27 @@ export default class App extends Component {
 
         this.state = {
             data: [],
+            startGame: false,
         };
-
+        this.needsToStart = true;
         this.gameLogic = new GameLogic(GameSettings);
         
     }
 
-    componentDidMount() {
-        this.gameLogic.startGame();
+    updateStartGame(bool){
+        this.setState({startGame: bool})
     }
 
     render() {
+        if (this.state.startGame && this.needsToStart) {
+            this.gameLogic.startGame();
+            this.needsToStart = false;
+        }
         return (
             <div className="App">
                <Banner/>
-               
-               <GameGrid 
+                <div className="startButton" onClick={this.updateStartGame.bind(this, true)} style={{visibility: this.state.startGame ? "hidden" : "visible"}}>START GAME</div>
+               <GameGrid
                          size={GameSettings.cubeSize}
                          xBlocks={GameSettings.xBlocks} 
                          yBlocks={GameSettings.yBlocks} 

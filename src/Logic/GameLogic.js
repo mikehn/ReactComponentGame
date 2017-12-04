@@ -2,6 +2,7 @@ import GridLogic from './GridLogic';
 import PacmanLogic from './PacManLogic';
 import GhostLogic from './GhostLogic';
 import Ghosts from "../components/GamePieces/Ghosts";
+import "./../style/start_button.css";
 import { GAME_STATE } from '../components/GamePieces/Consts';
 
 
@@ -10,6 +11,8 @@ export default class GameLogic {
         this.gameStepInterval = null;
         if (settings)
             this.init(settings);
+
+
     }
 
     init(settings) {
@@ -61,13 +64,15 @@ export default class GameLogic {
         this.gameStepInterval = setInterval(
 
             () => {
-                this.grid.getPlayers().forEach((player) => {
-                    this.updatePiece(player);
-                    if (player.isWinner) {
-                        this.endGame();
-                    }
 
-                });
+                    this.grid.getPlayers().forEach((player) => {
+                        this.updatePiece(player);
+                        if (player.isWinner) {
+                            this.endGame();
+                        }
+
+                    });
+
             },
             this.refreshRate);
     }
