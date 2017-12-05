@@ -15,7 +15,7 @@ export default class SampleGhost extends Component {
         }
         this.lastMove = "right";
 
-        //this.props.setNextMoveLogic(()=>GAME_CONSTS.RIGHT);
+       
     }
 
     componentWillReceiveProps(nextProps) {

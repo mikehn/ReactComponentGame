@@ -13,7 +13,6 @@ class GhostLogic extends GridPiece {
         this.moveNumber = 0;
         this.lastMoveSuccess = true;
         this.isWin = false;
-        console.log(">>>>>"+size);
         this.component = React.cloneElement(
             component,
             {
